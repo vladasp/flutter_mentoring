@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mentoring/main_app.dart';
+import 'package:flutter_mentoring/models/todo_model.dart';
 import 'package:flutter_mentoring/screens/second_screen.dart';
 
 class FirstScreen extends StatefulWidget {
@@ -12,24 +13,16 @@ class FirstScreen extends StatefulWidget {
 }
 
 class _FirstScreenState extends State<FirstScreen> {
+  TodoModel? selectedTodo;
+
   void _callBack(BuildContext c) async {
     final result =
         await rootNavigatorKey.currentState!.pushNamed(SecondScreen.routeName);
 
     if (result != null && c.mounted) {
-      showDialog(
-        context: c,
-        builder: (context) => AlertDialog(
-          content: Text('Result from second screen: ${result.toString()}'),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  rootNavigatorKey.currentState!.pop();
-                },
-                child: const Text('Ok'))
-          ],
-        ),
-      );
+      setState(() {
+        selectedTodo = result as TodoModel;
+      });
     }
   }
 
@@ -69,11 +62,25 @@ class _FirstScreenState extends State<FirstScreen> {
           elevation: 2,
         ),
         body: Center(
-          child: TextButton(
-            onPressed: () => _callBack(context),
-            child: const Text('Go next'),
-          ),
-        ),
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: () => _callBack(context),
+              child: const Text('GO TO 2nd SCREEN'),
+            ),
+            if (selectedTodo != null)
+              ListTile(
+                title: Text(selectedTodo!.title),
+                trailing: selectedTodo!.completed
+                    ? const Icon(
+                        Icons.check_box_outlined,
+                        color: Colors.green,
+                      )
+                    : const Icon(Icons.check_box_outline_blank),
+              ),
+          ],
+        )),
       ),
     );
   }
