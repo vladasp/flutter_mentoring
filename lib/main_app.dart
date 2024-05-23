@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_mentoring/generated/l10n.dart';
 import 'package:flutter_mentoring/screens/first_screen.dart';
 import 'package:flutter_mentoring/screens/second_screen.dart';
 
@@ -17,6 +19,13 @@ class _MainAppState extends State<MainApp> {
     return MaterialApp(
       navigatorKey: rootNavigatorKey,
       initialRoute: FirstScreen.routeName,
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
       routes: {
         FirstScreen.routeName: (context) => const FirstScreen(),
         SecondScreen.routeName: (context) => const SecondScreen(),

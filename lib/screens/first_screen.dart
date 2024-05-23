@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mentoring/generated/l10n.dart';
 import 'package:flutter_mentoring/main_app.dart';
 import 'package:flutter_mentoring/models/todo_model.dart';
 import 'package:flutter_mentoring/screens/second_screen.dart';
@@ -65,6 +66,11 @@ class _FirstScreenState extends State<FirstScreen> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(S.of(context).simpleSample),
+            Text(S.of(context).welcomeName('Ben')),
+            Text(S.of(context).welcomeGender('men')),
+            Text(S.of(context).welcomeRole('admin')),
+            const SizedBox(height: 12),
             TextButton(
               onPressed: () => _callBack(context),
               child: const Text('GO TO 2nd SCREEN'),

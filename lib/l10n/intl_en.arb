@@ -1,0 +1,6 @@
+{
+    "simpleSample": "Simple sample",
+    "welcomeName": "Welcome {name}",
+    "welcomeGender": "{gender, select, male {Hi man!} female {Hi woman!} other {Hi there!}}",
+    "welcomeRole": "{role, select, admin {Hi admin!} manager {Hi manager!} other {Hi visitor!}}"    
+}
