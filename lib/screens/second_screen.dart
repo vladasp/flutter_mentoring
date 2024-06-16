@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mentoring/main_app.dart';
 
-class SecondScreen extends StatefulWidget {
+class SecondScreen extends StatelessWidget {
   const SecondScreen({super.key});
   static const routeName = 'second';
 
-  @override
-  State<SecondScreen> createState() => _SecondScreenState();
-}
-
-class _SecondScreenState extends State<SecondScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -25,13 +19,13 @@ class _SecondScreenState extends State<SecondScreen> {
             children: [
               TextButton(
                 onPressed: () async {
-                  rootNavigatorKey.currentState!.pop(42);
+                  Navigator.of(context).pop(42);
                 },
                 child: const Text('Return 42'),
               ),
               TextButton(
                 onPressed: () async {
-                  rootNavigatorKey.currentState!.pop('AbErVaLlG');
+                  Navigator.of(context).pop('AbErVaLlG');
                 },
                 child: const Text('Return AbErVaLlG'),
               ),

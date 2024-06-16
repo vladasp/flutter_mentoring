@@ -1,30 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_mentoring/main_app.dart';
 import 'package:flutter_mentoring/screens/second_screen.dart';
 
-class FirstScreen extends StatefulWidget {
+class FirstScreen extends StatelessWidget {
   const FirstScreen({super.key});
   static const routeName = 'first';
 
-  @override
-  State<FirstScreen> createState() => _FirstScreenState();
-}
-
-class _FirstScreenState extends State<FirstScreen> {
-  void _callBack(BuildContext c) async {
+  void _callBack(BuildContext context) async {
     final result =
-        await rootNavigatorKey.currentState!.pushNamed(SecondScreen.routeName);
+        await Navigator.of(context).pushNamed(SecondScreen.routeName);
 
-    if (result != null && c.mounted) {
+    if (result != null && context.mounted) {
       showDialog(
-        context: c,
+        context: context,
         builder: (context) => AlertDialog(
           content: Text('Result from second screen: ${result.toString()}'),
           actions: [
             TextButton(
                 onPressed: () {
-                  rootNavigatorKey.currentState!.pop();
+                  Navigator.of(context).pop();
                 },
                 child: const Text('Ok'))
           ],
@@ -33,7 +27,7 @@ class _FirstScreenState extends State<FirstScreen> {
     }
   }
 
-  void _tryNavigateBack(didPop) async {
+  void _tryNavigateBack(bool didPop, BuildContext context) async {
     if (didPop) return;
     final result = await showDialog(
       context: context,
@@ -42,14 +36,15 @@ class _FirstScreenState extends State<FirstScreen> {
         actions: [
           TextButton(
               onPressed: () {
-                rootNavigatorKey.currentState!.pop(true);
+                Navigator.of(context).pop(true);
               },
               child: const Text('Ok')),
           TextButton(
-              onPressed: () {
-                rootNavigatorKey.currentState!.pop(false);
-              },
-              child: const Text('Cancel'))
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            child: const Text('Cancel'),
+          )
         ],
       ),
     );
@@ -62,7 +57,7 @@ class _FirstScreenState extends State<FirstScreen> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: _tryNavigateBack,
+      onPopInvoked: (didPop) => _tryNavigateBack(didPop, context),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('First screen'),
